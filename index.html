@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tower Survivors Browser Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Browser HTML Test Game</p>
+          <h1>Tower Survivors Prototype</h1>
+          <p class="subtitle">
+            A lightweight browser re-creation inspired by the Warcraft III map:
+            a stationary tower, stacking weapons, timed shop choices, and
+            endless enemy pressure.
+          </p>
+        </div>
+        <div class="topbar-actions">
+          <button id="pauseButton" class="secondary-button" type="button">
+            Pause
+          </button>
+          <button id="restartButton" class="primary-button" type="button">
+            Restart Run
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="playfield-panel">
+          <div class="hud">
+            <div class="hud-card">
+              <span>Health</span>
+              <strong id="healthValue">0 / 0</strong>
+              <div class="bar">
+                <div id="healthBar" class="bar-fill health-fill"></div>
+              </div>
+            </div>
+            <div class="hud-card">
+              <span>Mana Shield</span>
+              <strong id="shieldValue">0 / 0</strong>
+              <div class="bar">
+                <div id="shieldBar" class="bar-fill shield-fill"></div>
+              </div>
+            </div>
+            <div class="hud-card compact">
+              <span>Gold</span>
+              <strong id="goldValue">0</strong>
+            </div>
+            <div class="hud-card compact">
+              <span>Wave</span>
+              <strong id="waveValue">1</strong>
+            </div>
+            <div class="hud-card compact">
+              <span>Time</span>
+              <strong id="timeValue">0:00</strong>
+            </div>
+            <div class="hud-card compact">
+              <span>Shop In</span>
+              <strong id="shopTimerValue">0s</strong>
+            </div>
+          </div>
+
+          <div class="canvas-wrap">
+            <canvas
+              id="gameCanvas"
+              width="1100"
+              height="680"
+              aria-label="Tower Survivors prototype game canvas"
+            ></canvas>
+            <div id="overlayMessage" class="overlay-message hidden"></div>
+          </div>
+
+          <div class="controls-strip">
+            <div class="control-pill">
+              <strong>Controls:</strong>
+              <span>`P` pause, `R` restart, click a shop card to buy it</span>
+            </div>
+            <div class="control-pill">
+              <strong>Goal:</strong>
+              <span>Survive 6 minutes while stacking weapons and upgrades</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Tower Stats</h2>
+            </div>
+            <div id="statsList" class="stats-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Weapons</h2>
+            </div>
+            <div id="weaponList" class="list-panel"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Upgrades</h2>
+            </div>
+            <div id="upgradeList" class="list-panel"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Run Notes</h2>
+            </div>
+            <ul class="notes-list">
+              <li>Weapons and upgrades are adapted from the reference repo data.</li>
+              <li>Enemy strength and spawn rate scale over time.</li>
+              <li>Duplicate picks level up existing weapons or stack upgrades.</li>
+              <li>Common, Uncommon, Rare, and Epic rarity weights affect offers.</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <section id="shopModal" class="shop-modal hidden" aria-live="polite">
+      <div class="shop-card-shell">
+        <div class="shop-header">
+          <div>
+            <p class="eyebrow">Timed Shop</p>
+            <h2>Choose a New Power</h2>
+            <p id="shopHint" class="subtitle">
+              Buy one card, or skip to bank your gold for the next round.
+            </p>
+          </div>
+          <div class="shop-meta">
+            <span id="shopGoldLabel">Gold: 0</span>
+            <button id="rerollButton" class="secondary-button" type="button">
+              Reroll (50g)
+            </button>
+          </div>
+        </div>
+        <div id="shopChoices" class="shop-grid"></div>
+        <div class="shop-footer">
+          <button id="skipShopButton" class="ghost-button" type="button">
+            Skip Shop
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
