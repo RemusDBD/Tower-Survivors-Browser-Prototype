@@ -523,21 +523,22 @@ function weightedPick(items) {
 
 function generateShopOffers() {
   const offerMap = new Map();
-  let attempts = 0;
   const combinedPool = [
     ...WEAPON_POOL.map((item) => ({ ...item, kind: "weapon" })),
     ...UPGRADE_POOL.map((item) => ({ ...item, kind: "upgrade" })),
   ];
 
-  while (offerMap.size < 4 && attempts < 40) {
-    attempts += 1;
+  // Generate a fresh set every time the timed shop opens or is rerolled.
+  while (offerMap.size < 4) {
     const choice = weightedPick(combinedPool);
     offerMap.set(`${choice.kind}:${choice.id}`, choice);
   }
+
   return [...offerMap.values()];
 }
 
 function openShop() {
+  // A timed-shop event always gets a brand-new set immediately.
   state.shopOffers = generateShopOffers();
   state.shopOpen = true;
   state.paused = true;
