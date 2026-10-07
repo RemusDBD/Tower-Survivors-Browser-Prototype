@@ -673,6 +673,10 @@ function renderShop() {
 
 function updateHud() {
   const tower = state.tower;
+  // Keep the shop gold label synchronized with the main HUD gold value.
+  if (state.shopOpen) {
+    ui.shopGoldLabel.textContent = `Gold: ${Math.floor(tower.gold)}`;
+  }
   ui.healthValue.textContent = `${Math.ceil(tower.hp)} / ${tower.maxHp}`;
   ui.shieldValue.textContent = `${Math.ceil(tower.manaShield)} / ${tower.manaShieldMax}`;
   ui.goldValue.textContent = Math.floor(tower.gold);
