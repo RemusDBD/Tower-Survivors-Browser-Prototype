@@ -1439,10 +1439,19 @@ ui.restartButton.addEventListener("click", () => {
 });
 
 ui.rerollButton.addEventListener("click", rerollShop);
-ui.skipShopButton.addEventListener("click", () => {
+
+function skipShop() {
+  // Keep the skip action independent of the modal's visual state so it
+  // always closes the current shop and schedules the next normal shop.
+  if (!state.shopOpen) {
+    return;
+  }
   closeShop();
-  state.nextShopAt = state.time + state.shopInterval * 0.8;
-});
+  state.nextShopAt = state.time + state.shopInterval;
+  updateHud();
+}
+
+ui.skipShopButton.addEventListener("click", skipShop);
 
 window.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "p") {
