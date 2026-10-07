@@ -452,7 +452,8 @@ function resetGame() {
   addWeaponById("bow");
   addWeaponById("magicMissile");
   addUpgradeById("magicCoin");
-  closeShop();
+  // Show the timed shop at game start without pausing the run.
+  openShop();
   setOverlay("");
   updateSidebar();
   updateHud();
@@ -541,7 +542,8 @@ function openShop() {
   // A timed-shop event always gets a brand-new set immediately.
   state.shopOffers = generateShopOffers();
   state.shopOpen = true;
-  state.paused = true;
+  // The persistent shop must never pause the game.
+  state.paused = false;
   ui.shopModal.classList.remove("hidden");
   renderShop();
 }
@@ -567,8 +569,38 @@ function buyOffer(kind, id, price) {
   }
   updateSidebar();
   updateHud();
-  closeShop();
+
+  // Keep the timed shop visible after a purchase and immediately replace
+  // the purchased card so the player can continue shopping.
+  const purchasedIndex = state.shopOffers.findIndex(
+    (offer) => offer.kind === kind && offer.id === id,
+  );
+  if (purchasedIndex !== -1) {
+    state.shopOffers.splice(purchasedIndex, 1);
+  }
+
+  const replacementPool = [
+    ...WEAPON_POOL.map((item) => ({ ...item, kind: "weapon" })),
+    ...UPGRADE_POOL.map((item) => ({ ...item, kind: "upgrade" })),
+  ];
+  const existingOfferKeys = new Set(
+    state.shopOffers.map((offer) => `${offer.kind}:${offer.id}`),
+  );
+  let replacement;
+  for (let attempts = 0; attempts < 20 && !replacement; attempts += 1) {
+    const candidate = weightedPick(replacementPool);
+    if (!existingOfferKeys.has(`${candidate.kind}:${candidate.id}`)) {
+      replacement = candidate;
+    }
+  }
+  if (replacement) {
+    state.shopOffers.push(replacement);
+  } else {
+    state.shopOffers = generateShopOffers();
+  }
+
   state.nextShopAt = state.time + state.shopInterval;
+  renderShop();
 }
 
 function rerollShop() {
@@ -1422,7 +1454,7 @@ function gameLoop(now) {
 }
 
 ui.pauseButton.addEventListener("click", () => {
-  if (state.gameOver || state.victory || state.shopOpen) {
+  if (state.gameOver || state.victory) {
     return;
   }
   state.paused = !state.paused;
