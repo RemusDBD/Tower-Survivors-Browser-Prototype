@@ -73,6 +73,32 @@
             <div id="overlayMessage" class="overlay-message hidden"></div>
           </div>
 
+          <section id="shopModal" class="shop-panel hidden" aria-live="polite">
+            <div class="shop-card-shell">
+              <div class="shop-header">
+                <div>
+                  <p class="eyebrow">Timed Shop</p>
+                  <h2>Choose a New Power</h2>
+                  <p id="shopHint" class="subtitle">
+                    Buy one card, or skip to bank your gold for the next round.
+                  </p>
+                </div>
+                <div class="shop-meta">
+                  <span id="shopGoldLabel">Gold: 0</span>
+                  <button id="rerollButton" class="secondary-button" type="button">
+                    Reroll (50g)
+                  </button>
+                </div>
+              </div>
+              <div id="shopChoices" class="shop-grid"></div>
+              <div class="shop-footer">
+                <button id="skipShopButton" class="ghost-button" type="button">
+                  Skip Shop
+                </button>
+              </div>
+            </div>
+          </section>
+
           <div class="controls-strip">
             <div class="control-pill">
               <strong>Controls:</strong>
@@ -121,32 +147,6 @@
         </aside>
       </main>
     </div>
-
-    <section id="shopModal" class="shop-modal hidden" aria-live="polite">
-      <div class="shop-card-shell">
-        <div class="shop-header">
-          <div>
-            <p class="eyebrow">Timed Shop</p>
-            <h2>Choose a New Power</h2>
-            <p id="shopHint" class="subtitle">
-              Buy one card, or skip to bank your gold for the next round.
-            </p>
-          </div>
-          <div class="shop-meta">
-            <span id="shopGoldLabel">Gold: 0</span>
-            <button id="rerollButton" class="secondary-button" type="button">
-              Reroll (50g)
-            </button>
-          </div>
-        </div>
-        <div id="shopChoices" class="shop-grid"></div>
-        <div class="shop-footer">
-          <button id="skipShopButton" class="ghost-button" type="button">
-            Skip Shop
-          </button>
-        </div>
-      </div>
-    </section>
 
     <script src="./game.js"></script>
   </body>
