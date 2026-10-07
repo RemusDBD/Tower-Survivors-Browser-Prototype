@@ -311,23 +311,13 @@ canvas {
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.shop-modal {
-  position: fixed;
-  inset: auto 20px 20px;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-  padding: 0;
-  background: transparent;
+.shop-panel {
+  margin-top: 16px;
 }
 
 .shop-card-shell {
-  width: min(1100px, 100%);
-  max-height: min(78vh, 620px);
-  overflow: auto;
-  padding: 22px;
-  pointer-events: auto;
+  width: 100%;
+  padding: 18px;
   background: rgba(10, 22, 35, 0.96);
   border-color: rgba(119, 175, 255, 0.3);
 }
@@ -431,12 +421,7 @@ canvas {
     align-items: stretch;
   }
 
-  .shop-modal {
-    inset: auto 10px 10px;
-  }
-
   .shop-card-shell {
-    max-height: 72vh;
     padding: 16px;
   }
 
